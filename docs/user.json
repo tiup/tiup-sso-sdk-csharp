@@ -1,0 +1,15 @@
+{
+  "id": "121313131",
+  "email": "leeannxi@gmail.com",
+  "phone_number": "1212131312",
+  "school_accounts": [
+    {
+      "school_code": "121",
+      "school_name": "admin"
+    },
+    {
+      "school_code": "151",
+      "school_name": "user"
+    }
+  ]
+}

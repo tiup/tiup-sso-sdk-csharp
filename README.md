@@ -2,7 +2,7 @@
 
 # 关于
  
-此 C# SDK 适用于 .NET2.0 及以上版本，基于 [TIUP SSO SDK FOR Java](http://git.tiup.us/usercenter/cn.tiup.uc.sso) 构建。使用此 SDK 构建您的网络应用程序，能让您以非常便捷地使用TIUP用户数据。
+此 C# SDK 适用于 .NET2.0 及以上版本，基于 [TIUP SSO SDK FOR Java](http://git.tiup.us/usercenter/cn.tiup.uc.sso) 构建。使用此 SDK 构建您的网络应用程序，可以实现tiup单点登录，更加方便地获取用户信息。
 
 ## 使用
 

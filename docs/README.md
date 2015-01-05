@@ -1,27 +1,31 @@
-## SSO SDK for CSharp
-
-#### 状态代码含义
-
-* 服务状态：0开发中 1审核中 2审核通过 3未通过审核 4已下线 5已存档
-* 表单状态：0填表中 1签批中 2等待受理 3受理通过 4受理驳回 5驳回重填 9已删除
-* 表单audit状态：0等待1通过2驳回3需我签批4别人已签批
-* 推荐工作环境 Visual Studio 2013
+## Tiup SSO Login SDK for CSharp
 
 
-### 用户管理
 
-* url: /account
-* 请求方式：POST
-* 数据格式：json
+### 用户信息
+
+* path: /user
+
     + Headers
 
              Authorization: <oauth 2.0 token>
 
-    + Body
+    + User
 
             {
-                "name": "sample user name"
-                "password": "password"
+              "id": "121313131",
+              "email": "leeannxi@gmail.com",
+              "phone_number": "1212131312",
+              "school_accounts": [
+                {
+                  "school_code": "121",
+                  "school_name": "admin"
+                },
+                {
+                  "school_code": "151",
+                  "school_name": "user"
+                }
+              ]
             }
 
 
