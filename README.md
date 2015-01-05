@@ -1,26 +1,25 @@
-## SSO SDK for CSharp
+## TIUP SSO SDK for CSharp
 
-#### 状态代码含义
+# 关于
+ 
+此 C# SDK 适用于 .NET2.0 及以上版本，基于 [TIUP SSO SDK FOR Java](http://developer.tiup.cn) 构建。使用此 SDK 构建您的网络应用程序，能让您以非常便捷地使用TIUP用户数据。
 
-* 服务状态：0开发中 1审核中 2审核通过 3未通过审核 4已下线 5已存档
-* 表单状态：0填表中 1签批中 2等待受理 3受理通过 4受理驳回 5驳回重填 9已删除
-* 表单audit状态：0等待1通过2驳回3需我签批4别人已签批
-* 推荐工作环境 Visual Studio 2013
+## 使用
 
+参考文档：[TIUP 用户中心 C# SDK 使用指南](https://github.com/tiup.cn/csharp-sdk/docs/README.md)
 
-### 用户管理
+## 贡献代码
 
-* url: /account
-* 请求方式：POST
-* 数据格式：json
-    + Headers
+1. Fork
+2. 创建您的特性分支 (`git checkout -b my-new-feature`)
+3. 提交您的改动 (`git commit -am 'Added some feature'`)
+4. 将您的修改记录提交到远程 `git` 仓库 (`git push origin my-new-feature`)
+5. 然后到 github 网站的该 `git` 远程仓库的 `my-new-feature` 分支下发起 Pull Request
 
-             Authorization: <oauth 2.0 token>
+## 许可证
 
-    + Body
+Copyright (c) 2014 qiniu.com
 
-            {
-                "name": "sample user name"
-                "password": "password"
-            }
+基于 MIT 协议发布:
 
+* [www.opensource.org/licenses/MIT](http://www.opensource.org/licenses/MIT)
