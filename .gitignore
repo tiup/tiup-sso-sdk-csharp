@@ -1,0 +1,30 @@
+# Include your project-specific ignores in this file
+
+## Directory-based project format:
+.idea/
+
+## File-based project format:
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.resharper
+*.ncrunch*
+*.ndproj
+*.dotCover
+*.orig
+*.userprefs
+*.cache
+*.ilk
+*.log
