@@ -18,7 +18,7 @@
 
 ## 许可证
 
-Copyright (c) 2014 qiniu.com
+Copyright (c) 2015 tiup.cn
 
 基于 MIT 协议发布:
 
