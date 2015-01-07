@@ -22,7 +22,6 @@ D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Web.Razor.xml
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Web.WebPages.xml
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Web.WebPages.Deployment.xml
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Web.WebPages.Razor.xml
-D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\Antlr3.Runtime.pdb
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\Newtonsoft.Json.xml
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Net.Http.Formatting.xml
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\System.Web.Http.xml
@@ -37,6 +36,6 @@ D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\zh-Hans\System.Web.WebPages.Raz
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\zh-Hans\System.Web.Http.resources.dll
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
-D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\obj\Debug\Sample.csprojResolveAssemblyReference.cache
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\obj\Debug\Sample.dll
 D:\WorkDir\TIUP\sso_sdk_csharp\Sample\Sample\obj\Debug\Sample.pdb
+D:\WorkDir\TIUP\sso_sdk_csharp\sample\Sample\obj\Debug\Sample.csprojResolveAssemblyReference.cache
