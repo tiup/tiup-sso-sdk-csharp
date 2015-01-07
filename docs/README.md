@@ -1,6 +1,5 @@
 ﻿## Tiup SSO Login SDK for CSharp
 
-
 Setup Project in Visual Studio
 ----------------------------
 
