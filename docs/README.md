@@ -1,4 +1,4 @@
-## Tiup SSO Login SDK for CSharp
+﻿## Tiup SSO Login SDK for CSharp
 
 
 Setup Project in Visual Studio
@@ -17,7 +17,10 @@ After building TiupSsoAPI.sln as described above, feel free to peruse and run th
 2.   Define the `TiupSsoAPI` and `TiupSsoAppSecret` attributes in the `Web.config` file with your Tiup application key and secret respectively.
 2.   Right-click on the web project labeled `Samples` and click `View in Browser`.
 
-### User Info
+More Sample From Micorsoft [MVC Smaple Sign-on](http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on)
+------
+
+### User Info defined for Tiup
 
 * path: /user
 
