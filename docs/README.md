@@ -14,10 +14,10 @@ Samples
 After building TiupSsoAPI.sln as described above, feel free to peruse and run the examples provided in the `Samples` directory:
 
 1.   Open the Samples.sln file in Visual Studio.
-2.   Define the `TiupSsoAPI` and `TiupSsoAppSecret` attributes in the `Web.config` file with your Dwolla application key and secret respectively.
+2.   Define the `TiupSsoAPI` and `TiupSsoAppSecret` attributes in the `Web.config` file with your Tiup application key and secret respectively.
 2.   Right-click on the web project labeled `Samples` and click `View in Browser`.
 
-### 用户信息
+### User Info
 
 * path: /user
 
