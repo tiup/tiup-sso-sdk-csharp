@@ -24,7 +24,7 @@ namespace DotNetOpenAuth.TiupSso
     public class TiupSso : OAuth2Client
     {
         #region Constants and Fields
-        private const string AuthorizationEndpoint = "https://uc.tiup.cn/oauth/authorize?theme=schools&school_code=ruc&sso=true";
+        private const string AuthorizationEndpoint = "https://uc.tiup.cn/oauth/authorize";
         private const string TokenEndpoint = "http://uc.tiup.cn:18080/oauth/token";
         private const string UserInfoEndpoint = "http://uc.tiup.cn:18080/api/users/me";
 
@@ -59,13 +59,17 @@ namespace DotNetOpenAuth.TiupSso
         {
             var state = string.IsNullOrEmpty(returnUrl.Query) ? string.Empty : returnUrl.Query.Substring(1);
 
-            return BuildUri(AuthorizationEndpoint, new NameValueCollection
-                {
-                    { "client_id", _appId },
-                    { "scope", string.Join(" ", _requestedScopes) },
-                    { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
-                    { "state", state },
-                });
+               return BuildUri(AuthorizationEndpoint, new NameValueCollection
+               {
+                   { "client_id", _appId },
+                   { "scope", string.Join(" ", _requestedScopes) },
+                   { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
+                   { "state", state },
+                   { "response_type", "code" },
+                   { "theme", "schools" },
+                   { "school_code", "ruc" },
+                   { "sso", "true" },
+               });
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken)
@@ -93,13 +97,18 @@ namespace DotNetOpenAuth.TiupSso
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode)
         {
-            var uri = BuildUri(TokenEndpoint, new NameValueCollection
-                {
-                    { "code", authorizationCode },
-                    { "client_id", _appId },
-                    { "client_secret", _appSecret },
-                    { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
-                });
+           var uri = BuildUri(TokenEndpoint, new NameValueCollection
+           {
+               { "code", authorizationCode },
+               { "client_id", _appId },
+               { "client_secret", _appSecret },
+               { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
+               { "response_type", "code" },
+               { "theme", "schools" },
+               { "school_code", "ruc" },
+               { "sso", "true" },
+           });
+
 
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
 
