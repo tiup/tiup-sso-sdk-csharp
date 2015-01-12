@@ -10,17 +10,6 @@ using Newtonsoft.Json;
 
 namespace DotNetOpenAuth.TiupSso
 {
-    /**
-     * Test Info and Keys:
-     * clientSecret: 15d00623a33b1396d66042ec1dd581b71ec3ed68ce6099afcb0217857a375d17
-     * clientId: cn.tiup.ruc
-     * uid  : 2011202483
-     * pwd  : BA0Qz40cHe4UIed
-     * schoolCode: ruc  theme  sso
-     * 
-     * userURL http://uc.tiup.cn:18080/api/users/me //获取用户信息
-     * 
-    **/
     public class TiupSso : OAuth2Client
     {
         #region Constants and Fields
@@ -31,12 +20,15 @@ namespace DotNetOpenAuth.TiupSso
         private readonly string _appId;
         private readonly string _appSecret;
         private readonly string[] _requestedScopes;
+        private readonly string _schoolCode;
+        private readonly string _theme;
+        private readonly string _sso;
         #endregion
 
         public TiupSso(string appId, string appSecret)
-            : this(appId, appSecret, new[] { "email" }) { }
+            : this(appId, appSecret, null, new[] { "all" }) { }
 
-        public TiupSso(string appId, string appSecret, params string[] requestedScopes)
+        public TiupSso(string appId, string appSecret, Dictionary<string, string> extraData, params string[] requestedScopes)
             : base("tiup")
         {
             if (string.IsNullOrWhiteSpace(appId))
@@ -53,78 +45,113 @@ namespace DotNetOpenAuth.TiupSso
 
             _appId = appId;
             _appSecret = appSecret;
+            if (extraData.ContainsKey("school_code")) _schoolCode = extraData["school_code"];
+            if (extraData.ContainsKey("theme")) _theme = extraData["theme"];
+            if (extraData.ContainsKey("sso")) _sso = extraData["sso"];
             _requestedScopes = requestedScopes;
+
         }
+
+
         protected override Uri GetServiceLoginUrl(Uri returnUrl)
         {
             var state = string.IsNullOrEmpty(returnUrl.Query) ? string.Empty : returnUrl.Query.Substring(1);
-
-               return BuildUri(AuthorizationEndpoint, new NameValueCollection
-               {
-                   { "client_id", _appId },
-                   { "scope", string.Join(" ", _requestedScopes) },
-                   { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
-                   { "state", state },
-                   { "response_type", "code" },
-                   { "theme", "schools" },
-                   { "school_code", "ruc" },
-                   { "sso", "true" },
-               });
+            //加入空白?&, 防止服务器段没有做 ?/& 区分处理
+            var redirectUri = returnUrl.GetLeftPart(UriPartial.Path) + "?target=_blank";
+            return BuildUri(AuthorizationEndpoint, new NameValueCollection
+                {
+                    { "client_id", _appId },
+                    { "scope", string.Join(" ", _requestedScopes) },
+                    { "redirect_uri", redirectUri },
+                    { "state", state },
+                    { "response_type", "code" },
+                    { "theme", _theme },
+                    { "school_code", _schoolCode },
+                    { "sso", _sso },
+                });
         }
 
         protected override IDictionary<string, string> GetUserData(string accessToken)
         {
+            //获取用户信息
             var uri = BuildUri(UserInfoEndpoint, new NameValueCollection { { "access_token", accessToken } });
             var webRequest = (HttpWebRequest)WebRequest.Create(uri);
-
-            using (var webResponse = webRequest.GetResponse())
-            using (var stream = webResponse.GetResponseStream())
+            using (HttpWebResponse webResponse = (HttpWebResponse)webRequest.GetResponse())
             {
-                if (stream == null)
-                    return null;
-
-                using (var textReader = new StreamReader(stream))
+                if (webResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var json = textReader.ReadToEnd();
-                    var extraData = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-                    var data = extraData.ToDictionary(x => x.Key, x => x.Value.ToString());
-                    data.Add("picture", string.Format("https://graph.tiup.com/{0}/picture", data["id"]));
-
-                    return data;
+                    using (var responseStream = webResponse.GetResponseStream())
+                    {
+                        if (responseStream == null)
+                            return null;
+                        StreamReader streamReader = new StreamReader(responseStream);
+                        var responseString = streamReader.ReadToEnd();
+                        dynamic response = JsonConvert.DeserializeObject<dynamic>(responseString);
+                        try
+                        {
+                            var email = (string)response.data.email;
+                            var values = new Dictionary<string, string>();
+                            values.Add("username", email);
+                            values.Add("email", email);
+                            values.Add("id", (string)response.data.id);
+                            values.Add("response_string", responseString);
+                            return values;
+                        }
+                        catch
+                        {
+                            return null;
+                        }
+                    }
                 }
             }
+
+            return null;
+
         }
 
         protected override string QueryAccessToken(Uri returnUrl, string authorizationCode)
         {
-           var uri = BuildUri(TokenEndpoint, new NameValueCollection
-           {
-               { "code", authorizationCode },
-               { "client_id", _appId },
-               { "client_secret", _appSecret },
-               { "redirect_uri", returnUrl.GetLeftPart(UriPartial.Path) },
-               { "response_type", "code" },
-               { "theme", "schools" },
-               { "school_code", "ruc" },
-               { "sso", "true" },
-           });
-
-
-            var webRequest = (HttpWebRequest)WebRequest.Create(uri);
-
-            using (var webResponse = webRequest.GetResponse())
+            var redirectUri = returnUrl.GetLeftPart(UriPartial.Path) + "?target=_blank";
+            Dictionary<string, string> values = new Dictionary<string, string>();
+            values.Add("code", authorizationCode);
+            values.Add("client_id", _appId);
+            values.Add("client_secret", _appSecret);
+            values.Add("redirect_uri", redirectUri);
+            values.Add("grant_type", "authorization_code");
+            values.Add("response_type", "code");
+            values.Add("theme", _theme);
+            values.Add("school_code", _schoolCode);
+            values.Add("sso", _sso);
+            string postData = String.Join("&",
+                values.Select(x => Uri.EscapeDataString(x.Key) + "=" + Uri.EscapeDataString(x.Value))
+                      .ToArray());
+            WebRequest webRequest = WebRequest.Create(TokenEndpoint);
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            webRequest.ContentLength = postData.Length;
+            webRequest.Method = "POST";
+            using (Stream requestStream = webRequest.GetRequestStream())
             {
-                var responseStream = webResponse.GetResponseStream();
-                if (responseStream == null)
-                    return null;
-
-                using (var reader = new StreamReader(responseStream))
+                StreamWriter streamWriter = new StreamWriter(requestStream);
+                streamWriter.Write(postData);
+                streamWriter.Flush();
+            }
+            try
+            {
+                using (var webResponse = webRequest.GetResponse())
                 {
-                    var response = reader.ReadToEnd();
-
-                    var results = HttpUtility.ParseQueryString(response);
-                    return results["access_token"];
+                    using (Stream responseStream = webResponse.GetResponseStream())
+                    {
+                        if (responseStream == null)
+                            return null;
+                        StreamReader streamReader = new StreamReader(responseStream);
+                        dynamic response = JsonConvert.DeserializeObject<dynamic>(streamReader.ReadToEnd());
+                        return (string)response.access_token;
+                    }
                 }
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -132,7 +159,6 @@ namespace DotNetOpenAuth.TiupSso
         {
             var keyValuePairs = queryParameters.AllKeys.Select(k => HttpUtility.UrlEncode(k) + "=" + HttpUtility.UrlEncode(queryParameters[k]));
             var qs = String.Join("&", keyValuePairs);
-
             var builder = new UriBuilder(baseUri) { Query = qs };
             return builder.Uri;
         }
@@ -143,12 +169,10 @@ namespace DotNetOpenAuth.TiupSso
             var stateString = HttpUtility.UrlDecode(ctx.Request.QueryString["state"]);
             if (stateString == null || !stateString.Contains("__provider__=tiup"))
                 return;
-
             var q = HttpUtility.ParseQueryString(stateString);
             q.Add(ctx.Request.QueryString);
             q.Remove("state");
             ctx.RewritePath(ctx.Request.Path + "?" + q);
-
         }
     }
 }
