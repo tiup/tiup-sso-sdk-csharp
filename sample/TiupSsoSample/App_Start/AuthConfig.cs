@@ -13,9 +13,14 @@ namespace TiupSsoSample
     {
         public static void RegisterAuth()
         {
-            var client = new TiupSso("yourClientId", "yourClientSecret");
-            var extraData = new Dictionary<string, object>();
-            OAuthWebSecurity.RegisterClient(client, "Tiup.cn", extraData);
+            var extraData = new Dictionary<string, string>();
+            //input your extra data
+            extraData["school_code"] = "ruc";
+            extraData["theme"] = "schools";
+            extraData["sso"] = "true";
+            //input your appId and  app secret
+            var client = new TiupSso("cn.tiup.ruc", "15d00623a33b1396d66042ec1dd581b71ec3ed68ce6099afcb0217857a375d17", extraData, new[] { "all" });
+            OAuthWebSecurity.RegisterClient(client, "Tiup.cn", null);
         }
     }
 }

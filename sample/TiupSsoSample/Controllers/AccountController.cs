@@ -218,7 +218,7 @@ namespace TiupSsoSample.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
-            //TODO: 添加返回响应
+
              TiupSso.RewriteRequest();
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
