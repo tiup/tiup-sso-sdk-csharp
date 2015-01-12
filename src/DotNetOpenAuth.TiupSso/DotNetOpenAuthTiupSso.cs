@@ -95,6 +95,7 @@ namespace DotNetOpenAuth.TiupSso
                             values.Add("email", email);
                             values.Add("id", (string)response.data.id);
                             values.Add("response_string", responseString);
+                            values.Add("school_code", _schoolCode);
                             return values;
                         }
                         catch

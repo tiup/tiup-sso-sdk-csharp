@@ -33,9 +33,23 @@ namespace TiupSsoSample.Models
         [Required]
         [Display(Name = "用户名")]
         public string UserName { get; set; }
+        
+        [Display(Name = "学校")]
+        public List<RegisterExternalLoginSchoolAccountModel> SchoolAccounts { get; set; }
 
         public string ExternalLoginData { get; set; }
+
     }
+
+    public class RegisterExternalLoginSchoolAccountModel
+    {
+        public string Id { get; set; }
+        public string SchoolId { get; set;}
+        public string UserName { get; set; }
+        public string SchoolCode { get; set; }
+
+    }
+
 
     public class LocalPasswordModel
     {

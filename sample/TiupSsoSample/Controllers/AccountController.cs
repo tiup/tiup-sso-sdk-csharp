@@ -11,6 +11,7 @@ using WebMatrix.WebData;
 using TiupSsoSample.Filters;
 using TiupSsoSample.Models;
 using DotNetOpenAuth.TiupSso;
+using Newtonsoft.Json;
 
 namespace TiupSsoSample.Controllers
 {
@@ -218,8 +219,9 @@ namespace TiupSsoSample.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginCallback(string returnUrl)
         {
+            //例子: Step 1 : 重写请求
+            TiupSso.RewriteRequest();
 
-             TiupSso.RewriteRequest();
             AuthenticationResult result = OAuthWebSecurity.VerifyAuthentication(Url.Action("ExternalLoginCallback", new { ReturnUrl = returnUrl }));
             if (!result.IsSuccessful)
             {
@@ -230,7 +232,6 @@ namespace TiupSsoSample.Controllers
             {
                 return RedirectToLocal(returnUrl);
             }
-
             if (User.Identity.IsAuthenticated)
             {
                 // 如果当前用户已登录，则添加新帐户
@@ -240,10 +241,26 @@ namespace TiupSsoSample.Controllers
             else
             {
                 // 该用户是新用户，因此将要求该用户提供所需的成员名称
+               
                 string loginData = OAuthWebSecurity.SerializeProviderUserId(result.Provider, result.ProviderUserId);
                 ViewBag.ProviderDisplayName = OAuthWebSecurity.GetOAuthClientData(result.Provider).DisplayName;
                 ViewBag.ReturnUrl = returnUrl;
-                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData });
+
+                 //例子: Step 2 : 将 response_string 作为附加信息,传入到账户创建界面, 便于选择学校
+                var responseString = result.ExtraData["response_string"];
+                var schoolCode = result.ExtraData["school_code"];
+                dynamic response = JsonConvert.DeserializeObject<dynamic>(responseString);
+                var schools = (List<dynamic>)response.school_accounts;
+                var schoolAccounts = new List<RegisterExternalLoginSchoolAccountModel>();
+                for (var i=0; i<schools.Count; i++) {
+                    var school = new RegisterExternalLoginSchoolAccountModel { Id = "11", SchoolId = "ruc", UserName = "user", SchoolCode = "ruc" };
+                    schoolAccounts.Add(school);
+                }
+
+                //var schoolAccounts = null;
+
+
+                return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData, SchoolAccounts = schoolAccounts });
             }
         }
 
@@ -255,6 +272,7 @@ namespace TiupSsoSample.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
+            //例子: Step 3 : 处理返回信息,用于选择学校
             string provider = null;
             string providerUserId = null;
 
