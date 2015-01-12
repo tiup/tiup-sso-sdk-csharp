@@ -3,46 +3,22 @@
 Setup Project in Visual Studio
 ----------------------------
 
-1.   Open the `TiupSsoAPI.sln` with Visual Studio.
+1.   Open the `scr/DotNetOpenAuth.TiupSso.sln` with Visual Studio.
 2.   Click on `Build > Rebuild Solution`.
 3.   The .dll is copied to `..\Bin`.
 
 Samples
 -----
 
-After building TiupSsoAPI.sln as described above, feel free to peruse and run the examples provided in the `Samples` directory:
+Setup Your Project in Visual Studio In NuGet
+----------------------------
+1. Install JSON And DotNetOpenAuth
 
-1.   Open the Samples.sln file in Visual Studio.
-2.   Define the `TiupSsoAPI` and `TiupSsoAppSecret` attributes in the `Web.config` file with your Tiup application key and secret respectively.
-2.   Right-click on the web project labeled `Samples` and click `View in Browser`.
+             Install-Package Newtonsoft.Json
+             Install-Package DotNetOpenAuth.AspNet
 
-More Sample From Micorsoft [MVC Smaple Sign-on](http://www.asp.net/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on)
-------
+2. Include the build dll in your project
 
-### User Info defined for Tiup
+3. Read the reference by your project is aspx or mvc
 
-* path: /user
-
-    + Headers
-
-             Authorization: <oauth 2.0 token>
-
-    + User
-
-            {
-              "id": "121313131",
-              "email": "leeannxi@gmail.com",
-              "phone_number": "1212131312",
-              "school_accounts": [
-                {
-                  "school_code": "121",
-                  "school_name": "admin"
-                },
-                {
-                  "school_code": "151",
-                  "school_name": "user"
-                }
-              ]
-            }
-
-
+            https://github.com/DotNetOpenAuth/DotNetOpenAuth/wiki/Creating-an-openid-relying-party-%28programatically%29
