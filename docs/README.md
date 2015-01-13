@@ -20,7 +20,7 @@
 
 ## Below you can find code snippets whether you're using ASP.NET MVC or ASP.NET web forms. (From DotNetOpenAuth)
 # MVC
-The Sample Code is ASP.NET MVC.
+The Sample Code is In ASP.NET MVC.
 
 First step to create an OpenID logon for ASP.NET mvc is to implement a controller that controls the login flow. A sample of the login methods is provided below.
 
