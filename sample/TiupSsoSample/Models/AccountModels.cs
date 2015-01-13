@@ -34,7 +34,7 @@ namespace TiupSsoSample.Models
         [Display(Name = "用户名")]
         public string UserName { get; set; }
         
-        [Display(Name = "学校")]
+        [Display(Name = "选择学校账户")]
         public List<RegisterExternalLoginSchoolAccountModel> SchoolAccounts { get; set; }
 
         [Display(Name = "已选择学校")]
@@ -51,6 +51,7 @@ namespace TiupSsoSample.Models
         public string UserId { get; set; }
         public string UserName { get; set; }
         public string SchoolCode { get; set; }
+        public string DisplaySchoolAccount { get; set; }
 
     }
 

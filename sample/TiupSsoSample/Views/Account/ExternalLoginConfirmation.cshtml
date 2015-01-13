@@ -27,9 +27,7 @@
             </li>
              <li class="school">
                 @Html.LabelFor(m => m.SchoolAccounts)
-                @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.SchoolAccounts, "Id", "SchoolCode"))  
-
-                
+                @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.SchoolAccounts, "UserName", "DisplaySchoolAccount"))  
             </li>
         </ol>
         @Html.HiddenFor(m => m.ExternalLoginData)
