@@ -1,6 +1,3 @@
-[![build status][travis-image]][travis-url]
-[![Test coverage][coveralls-image]][coveralls-url]
-
 ## TIUP SSO SDK for CSharp
 
 # 关于
