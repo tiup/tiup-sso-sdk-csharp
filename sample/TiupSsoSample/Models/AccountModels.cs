@@ -37,6 +37,9 @@ namespace TiupSsoSample.Models
         [Display(Name = "学校")]
         public List<RegisterExternalLoginSchoolAccountModel> SchoolAccounts { get; set; }
 
+        [Display(Name = "已选择学校")]
+        public string SelectedSchoolId { get; set; }
+
         public string ExternalLoginData { get; set; }
 
     }
@@ -45,6 +48,7 @@ namespace TiupSsoSample.Models
     {
         public string Id { get; set; }
         public string SchoolId { get; set;}
+        public string UserId { get; set; }
         public string UserName { get; set; }
         public string SchoolCode { get; set; }
 

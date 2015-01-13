@@ -26,6 +26,9 @@
                 @Html.ValidationMessageFor(m => m.UserName)
             </li>
              <li class="school">
+                @Html.LabelFor(m => m.SchoolAccounts)
+                @Html.DropDownListFor(m => m.SelectedSchoolId, new SelectList(Model.SchoolAccounts, "Id", "SchoolCode"))  
+
                 
             </li>
         </ol>

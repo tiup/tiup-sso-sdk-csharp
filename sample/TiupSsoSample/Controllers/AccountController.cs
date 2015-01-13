@@ -250,16 +250,16 @@ namespace TiupSsoSample.Controllers
                 var responseString = result.ExtraData["response_string"];
                 var schoolCode = result.ExtraData["school_code"];
                 dynamic response = JsonConvert.DeserializeObject<dynamic>(responseString);
-                var schools = (List<dynamic>)response.school_accounts;
+                var schools = response.data.school_accounts;
                 var schoolAccounts = new List<RegisterExternalLoginSchoolAccountModel>();
+                var etst = schools.Count;
+
                 for (var i=0; i<schools.Count; i++) {
-                    var school = new RegisterExternalLoginSchoolAccountModel { Id = "11", SchoolId = "ruc", UserName = "user", SchoolCode = "ruc" };
+                    //TODO: 过滤学校内容, 去掉 注释内容, 则可根据开发者的schoolCode, 列出符合条件的学校
+                    //if (schools[i].school_code != schoolCode) continue;
+                    var school = new RegisterExternalLoginSchoolAccountModel { Id = schools[i].id, SchoolId = schools[i].school_id, UserId = schools[i].user_id, UserName = schools[i].username, SchoolCode = schools[i].school_code };
                     schoolAccounts.Add(school);
                 }
-
-                //var schoolAccounts = null;
-
-
                 return View("ExternalLoginConfirmation", new RegisterExternalLoginModel { UserName = result.UserName, ExternalLoginData = loginData, SchoolAccounts = schoolAccounts });
             }
         }
@@ -272,7 +272,9 @@ namespace TiupSsoSample.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLoginConfirmation(RegisterExternalLoginModel model, string returnUrl)
         {
-            //例子: Step 3 : 处理返回信息,用于选择学校
+            //TODO: 例子: Step 3 : 处理返回信息,用于选择学校, 
+            var schoolId = model.SelectedSchoolId;
+
             string provider = null;
             string providerUserId = null;
 
