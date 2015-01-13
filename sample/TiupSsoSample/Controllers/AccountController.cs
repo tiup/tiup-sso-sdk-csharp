@@ -255,8 +255,8 @@ namespace TiupSsoSample.Controllers
                 var etst = schools.Count;
 
                 for (var i=0; i<schools.Count; i++) {
-                    //TODO: 过滤学校内容, 去掉 注释内容, 则可根据开发者的schoolCode, 列出符合条件的学校
-                    //if (schools[i].school_code != schoolCode) continue;
+                    //TODO: 过滤学校内容, 可根据开发者的schoolCode, 列出符合条件的学校, 注释掉可列出所有学校
+                    if (schools[i].school_code != schoolCode) continue;
                     var school = new RegisterExternalLoginSchoolAccountModel { Id = schools[i].id, SchoolId = schools[i].school_id, UserId = schools[i].user_id, UserName = schools[i].username, SchoolCode = schools[i].school_code, DisplaySchoolAccount = "学校:" + schools[i].school_code + " 帐号:" + schools[i].username};
                     schoolAccounts.Add(school);
                 }
