@@ -6,7 +6,7 @@
 
 ## 使用
 
-参考文档：[TIUP 用户中心 C# SDK 使用指南](http://git.tiup.us/usercenter/sso_sdk_csharp/blob/master/docs/README.md)
+参考文档：[TIUP 用户中心 C# SDK 使用指南](https://github.com/tiup/tiup-sso-sdk-csharp/tree/master/docs)
 
 ## 贡献代码
 
