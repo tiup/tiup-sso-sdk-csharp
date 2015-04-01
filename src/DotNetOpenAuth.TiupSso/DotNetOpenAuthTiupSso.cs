@@ -14,8 +14,8 @@ namespace DotNetOpenAuth.TiupSso
     {
         #region Constants and Fields
         private const string AuthorizationEndpoint = "https://uc.tiup.cn/oauth/authorize";
-        private const string TokenEndpoint = "http://uc.tiup.cn/oauth/token";
-        private const string UserInfoEndpoint = "http://uc.tiup.cn/api/users/me";
+        private const string TokenEndpoint = "https://uc.tiup.cn/oauth/token";
+        private const string UserInfoEndpoint = "https://uc.tiup.cn/api/users/me";
 
         private readonly string _appId;
         private readonly string _appSecret;
